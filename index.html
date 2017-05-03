@@ -2,16 +2,28 @@
 <html>
    <head>
       <meta charset="UTF-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" /><!-- damit die Karte auf dem handy komplett ausgefüllt wird -->
       <title>Stadtspaziergang Wien</title>
       <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
       <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
       <!-- GeoJSON Datenskripts -->
       <script src="stadtspaziergang_wien_punkte.js"></script>
       <script src="citybike_wien_punkte.js"></script>
+
       <script src="wanderwege_wien_linien.js"></script>
       <script src="maerkte_wien_flaechen.js"></script>
       <!--  TODO: GeoJSON Datenskript für Märkte/Flächen einbinden - https://www.data.gv.at/suche/?search-term=wien+m%C3%A4rkte&searchIn=catalog ERLEDIGT -->
       <style>
+	  body {
+		padding: 0;
+		margin: 0;
+		}
+		/*
+		html, body, #map {
+		height: 100vh;
+		width: 100vw;
+		}
+		*/
          h1 {
          text-align: center;
          }
@@ -108,6 +120,7 @@
          
          // GeoJSON Daten der Citybike Stationen laden und Popup erstellen POINT TO LAYER
          var punkteCitybike = L.geoJSON(window.citybikeStandorte, {
+		 pointToLayer: function(feature, latlng) {
          //		var myIcon = L.icon({
          //iconUrl: 'http://www.data.wien.gv.at/icons/citybike.png',
          //iconSize: [38, 95],
@@ -167,6 +180,7 @@
              "Wandern in und um Wien": linienWanderwege,
          "Wiener Märkte" : flaechenMaerkte
          }).addTo(map)
+		 map.locate({setView: true, maxZoom: 16})//hier wird bestimmt, ob der Browser auf meinen Standort zugreifen darf
          // Ausschnitt setzen
          // TODO: Ausschnitt auf Stationen des Stadtpaziergangs setzen WEISS NICHT WAS DAMIT GEMEINT IST
       </script>
